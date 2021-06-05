@@ -73,7 +73,7 @@ const addStar = async (repoId) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer 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',
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       query: `
