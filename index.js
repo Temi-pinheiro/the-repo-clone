@@ -9,7 +9,7 @@ const smallAvatar = document.querySelector('.avatarSmall');
 const repoNumber = document.querySelector('.repoNumber');
 const repoNumber2 = document.querySelector('.repoNumber2');
 const repoList = document.querySelector('.repoList');
-const apiKey = '';
+const apiKey = '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';
 
 const getUser = async () => {
   const loginName = login.value;
@@ -68,7 +68,7 @@ const getUser = async () => {
   }
 };
 
-const addStar = async (repoId) => {
+const addStar = async (button, repoId) => {
   const res = await fetch('https://api.github.com/graphql', {
     method: 'POST',
     headers: {
@@ -88,6 +88,8 @@ const addStar = async (repoId) => {
       variables: {},
     }),
   });
+  button.innerHTML = 'Starred';
+  button.disabled = 'true';
 };
 
 const printUserData = async () => {
@@ -131,6 +133,8 @@ const printRepos = async () => {
 
     const primaryLang = primaryLanguage ? primaryLanguage.name : '';
     let langIcon;
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const date = new Date(updatedAt).toLocaleDateString('en-US', options);
 
     if (primaryLang !== '') {
       switch (primaryLang) {
@@ -162,7 +166,7 @@ const printRepos = async () => {
             <li>
               <img src="./public/images/fork.svg" alt="">
               ${forkCount}</li>
-            <li>Updated on ${updatedAt}</li>
+            <li>Updated on ${date}</li>
           </ul>
           </div>
           
@@ -180,7 +184,7 @@ const printRepos = async () => {
     button.addEventListener('click', (e) => {
       const id = button.id;
       console.log(id);
-      addStar(id);
+      addStar(button, id);
     });
   });
 };
